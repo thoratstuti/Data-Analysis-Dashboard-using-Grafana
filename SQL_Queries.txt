@@ -1,0 +1,92 @@
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    CompanyName VARCHAR(100),
+    ContactName VARCHAR(100),
+    Email VARCHAR(100),
+    Phone VARCHAR(20),
+    Address VARCHAR(200)
+);
+
+CREATE TABLE SalesReps (
+    SalesRepID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Email VARCHAR(100),
+    Phone VARCHAR(20),
+    HireDate DATE
+);
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(100),
+    Description TEXT,
+    UnitPrice DECIMAL(10, 2),
+    Category VARCHAR(50)
+);
+
+CREATE TABLE Projects (
+    ProjectID INT PRIMARY KEY,
+    CustomerID INT,
+    SalesRepID INT,
+    ProjectName VARCHAR(100),
+    StartDate DATE,
+    EndDate DATE,
+    Status VARCHAR(20),
+    TotalValue DECIMAL(10, 2),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (SalesRepID) REFERENCES SalesReps(SalesRepID)
+);
+
+CREATE TABLE ProjectDetails (
+    ProjectDetailID INT PRIMARY KEY,
+    ProjectID INT,
+    ProductID INT,
+    Quantity INT,
+    UnitPrice DECIMAL(10, 2),
+    TotalPrice DECIMAL(10, 2),
+    FOREIGN KEY (ProjectID) REFERENCES Projects(ProjectID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+
+*******************************************************************
+
+-- Customers
+INSERT INTO Customers (CustomerID, CompanyName, ContactName, Email, Phone, Address) VALUES
+(1, 'TechCorp', 'John Smith', 'john@techcorp.com', '555-0101', '123 Tech St, Silicon Valley, CA'),
+(2, 'GreenEnergy', 'Emma Green', 'emma@greenenergy.com', '555-0202', '456 Solar Ave, Phoenix, AZ'),
+(3, 'FoodChain', 'Michael Brown', 'michael@foodchain.com', '555-0303', '789 Organic Ln, Portland, OR'),
+(4, 'AutoInnovate', 'Sarah Johnson', 'sarah@autoinnovate.com', '555-0404', '321 Motor Dr, Detroit, MI'),
+(5, 'FinanceFlow', 'David Lee', 'david@financeflow.com', '555-0505', '654 Wall St, New York, NY');
+
+-- SalesReps
+INSERT INTO SalesReps (SalesRepID, FirstName, LastName, Email, Phone, HireDate) VALUES
+(1, 'Alice', 'Parker', 'alice@salesteam.com', '555-1001', '2022-01-15'),
+(2, 'Bob', 'Martinez', 'bob@salesteam.com', '555-1002', '2022-03-01'),
+(3, 'Carol', 'Zhang', 'carol@salesteam.com', '555-1003', '2022-05-10'),
+(4, 'Daniel', 'Thompson', 'daniel@salesteam.com', '555-1004', '2022-07-22'),
+(5, 'Eva', 'Novak', 'eva@salesteam.com', '555-1005', '2022-09-05');
+
+-- Products
+INSERT INTO Products (ProductID, ProductName, Description, UnitPrice, Category) VALUES
+(1, 'Advanced CRM', 'Customer relationship management software', 1999.99, 'Software'),
+(2, 'Solar Panel Array', '20kW solar panel system', 15000.00, 'Renewable Energy'),
+(3, 'Industrial Mixer', 'High-capacity food processing mixer', 8500.00, 'Food Equipment'),
+(4, 'Electric Vehicle Charger', 'Fast-charging EV station', 2500.00, 'Automotive'),
+(5, 'Financial Analytics Suite', 'Comprehensive financial analysis tools', 3999.99, 'Software');
+
+-- Projects
+INSERT INTO Projects (ProjectID, CustomerID, SalesRepID, ProjectName, StartDate, EndDate, Status, TotalValue) VALUES
+(1, 1, 1, 'TechCorp CRM Implementation', '2024-01-01', '2024-06-30', 'In Progress', 25000.00),
+(2, 2, 2, 'GreenEnergy Solar Installation', '2024-02-15', '2024-05-15', 'Planning', 75000.00),
+(3, 3, 3, 'FoodChain Equipment Upgrade', '2024-03-01', '2024-04-30', 'Completed', 42500.00),
+(4, 4, 4, 'AutoInnovate Charging Network', '2024-04-01', '2024-12-31', 'In Progress', 100000.00),
+(5, 5, 5, 'FinanceFlow Analytics Deployment', '2024-05-01', '2024-07-31', 'Planning', 20000.00);
+
+-- ProjectDetails
+INSERT INTO ProjectDetails (ProjectDetailID, ProjectID, ProductID, Quantity, UnitPrice, TotalPrice) VALUES
+(1, 1, 1, 10, 1999.99, 19999.90),
+(2, 2, 2, 5, 15000.00, 75000.00),
+(3, 3, 3, 5, 8500.00, 42500.00),
+(4, 4, 4, 40, 2500.00, 100000.00),
+(5, 5, 5, 5, 3999.99, 19999.95);
